@@ -14,8 +14,6 @@ export const typeOrmConfig: DataSourceOptions = {
   logging: Boolean(process.env.TYPEORM_LOGGING),
   entities: [process.env.TYPEORM_ENTITIES],
   migrations: [process.env.TYPEORM_MIGRATIONS],
-  subscribers: [process.env.TYPEORM_SUBSCRIBERS],
-  migrationsTableName: process.env.TYPEORM_MIGRATIONS_TABLE_NAME,
 };
 
 export const typeOrmMigrationConfig = new DataSource(typeOrmConfig);
