@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common/exceptions';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
@@ -10,25 +10,22 @@ describe('UsersController', () => {
 
   const usersTable = [
     {
-      fullname: 'User Userson',
+      fullName: 'User Userson',
       email: 'user@gmail.com',
       password: '1234',
       id: 1,
-      isActivated: false,
     },
     {
-      fullname: 'User1 Userson1',
+      fullName: 'User1 Userson1',
       email: 'user1@gmail.com',
       password: '1234',
       id: 2,
-      isActivated: false,
     },
     {
-      fullname: 'User2 Userson2',
+      fullName: 'User2 Userson2',
       email: 'user2@gmail.com',
       password: '1234',
       id: 3,
-      isActivated: false,
     },
   ];
 
@@ -54,21 +51,18 @@ describe('UsersController', () => {
       return {
         ...dto,
         id: expect.any(Number),
-        isActivated: false,
       };
     }),
     update: jest.fn((dto) => {
       return {
         ...dto,
         id: expect.any(Number),
-        isActivated: false,
       };
     }),
     remove: jest.fn((dto) => {
       return {
         ...dto,
         id: expect.any(Number),
-        isActivated: false,
       };
     }),
   };
@@ -80,7 +74,7 @@ describe('UsersController', () => {
         UsersService,
         {
           useValue: usersRepositoryFactory,
-          provide: getRepositoryToken(User),
+          provide: getRepositoryToken(UserEntity),
         },
       ],
     }).compile();
@@ -109,23 +103,21 @@ describe('UsersController', () => {
   it('create (success): should create a new user', async () => {
     expect(
       await usersController.create({
-        fullname: 'User12 Userson12',
+        fullName: 'User12 Userson12',
         email: 'user12@gmail.com',
         password: '1234',
       }),
     ).toStrictEqual({
-      fullname: 'User12 Userson12',
+      fullName: 'User12 Userson12',
       email: 'user12@gmail.com',
-      password: '1234',
       id: expect.any(Number),
-      isActivated: false,
     });
   });
 
   it('create (error): should throw error (email already exists)', async () => {
     try {
       await usersController.create({
-        fullname: 'User1 Userson1',
+        fullName: 'User1 Userson1',
         email: 'user1@gmail.com',
         password: '1234',
       });
@@ -140,23 +132,21 @@ describe('UsersController', () => {
   it('update (success): should update user by id', async () => {
     expect(
       await usersController.update(2, {
-        fullname: 'User12 Userson12',
+        fullName: 'User12 Userson12',
         email: 'user12@gmail.com',
         password: '1234',
       }),
     ).toStrictEqual({
-      fullname: 'User12 Userson12',
+      fullName: 'User12 Userson12',
       email: 'user12@gmail.com',
-      password: '1234',
       id: 2,
-      isActivated: false,
     });
   });
 
   it('update (error): should throw error (Not Found)', async () => {
     try {
       await usersController.update(212, {
-        fullname: 'User12 Userson12',
+        fullName: 'User12 Userson12',
         email: 'user12@gmail.com',
         password: '1234',
       });
@@ -169,7 +159,7 @@ describe('UsersController', () => {
   it('update (error): should throw error (email already exists)', async () => {
     try {
       await usersController.update(1, {
-        fullname: 'User1 Userson1',
+        fullName: 'User1 Userson1',
         email: 'user1@gmail.com',
         password: '1234',
       });
